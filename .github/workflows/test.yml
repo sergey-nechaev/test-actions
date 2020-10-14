@@ -1,7 +1,7 @@
 name: update-readme
 
 # Run this workflow every time a new commit pushed to your repository
-on: push
+on: [workflow_dispatch, push]
 
 jobs:
   # Set the job key. The key is displayed as the job name
@@ -19,7 +19,4 @@ jobs:
 
       # Runs the action
       - name: Run Readme Editor
-        uses: github/checkout@v2
-        env:
-          DEFAULT_BRANCH: main
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: php -v
