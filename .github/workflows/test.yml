@@ -17,8 +17,8 @@ jobs:
       
       - name: Run Readme Editor
         run: |
-          php -v >> README.md
-          git config user.name github-actions
+          echo 123 > README.md
+          git config user.name "Update README Action"
           git config user.email github-actions@github.com
           git add .
           git commit -m "README.md updated by action"
