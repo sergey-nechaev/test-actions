@@ -20,9 +20,9 @@ jobs:
         ruby-version: 2.6.x
     - name: awesome_bot checks
       run: |
-        ruby .github/osia_convert.rb
+#        ruby .github/osia_convert.rb
         gem install awesome_bot
-        ruby .github/osia_get_links.rb
+#        ruby .github/osia_get_links.rb
         awesome_bot urls.txt --allow-ssl
         ls -al
 #    - name: Create issue
