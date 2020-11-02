@@ -3,13 +3,14 @@
 name: Check Links Health
 
 on:
+  workflow_dispatch:
   schedule:
     # * is a special character in YAML so you have to quote this string
     - cron:  '1 1 * * 0'
 
 jobs:
   check-links-health:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-18.04
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
@@ -18,5 +19,8 @@ jobs:
 
       - name: Run a multi-line script
         run: |
-          echo 123
-          echo 456
+          sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-key C99B11DEB97541F0
+          sudo apt-add-repository https://cli.github.com/packages
+          sudo apt update
+          sudo apt install gh
+          gh --version
