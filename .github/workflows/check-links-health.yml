@@ -12,16 +12,24 @@ jobs:
   check-links-health:
     runs-on: ubuntu-18.04
 
-    # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
-      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-      - uses: actions/checkout@v2
-
-      - name: Run a multi-line script
-        run: |
-          sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-key C99B11DEB97541F0
-          sudo apt-add-repository https://cli.github.com/packages
-          sudo apt update
-          sudo apt install gh
-          export GITHUB_TOKEN=${{ secrets.GITHUB_TOKEN }}
-          gh issue create --title "Issue title action" --body "Issue body action"
+    - uses: actions/checkout@v2
+    - name: Set up Ruby 2.6
+      uses: actions/setup-ruby@v1
+      with:
+        ruby-version: 2.6.x
+    - name: awesome_bot checks
+      run: |
+        ruby .github/osia_convert.rb
+        gem install awesome_bot
+        ruby .github/osia_get_links.rb
+        awesome_bot urls.txt --allow-ssl
+        ls -al
+#    - name: Create issue
+#      run: |
+#          sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-key C99B11DEB97541F0
+#          sudo apt-add-repository https://cli.github.com/packages
+#          sudo apt update
+#          sudo apt install gh
+#          export GITHUB_TOKEN=${{ secrets.GITHUB_TOKEN }}
+#          gh issue create --title "Issue title action" --body "Issue body action"
