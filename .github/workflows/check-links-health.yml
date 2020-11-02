@@ -23,5 +23,5 @@ jobs:
           sudo apt-add-repository https://cli.github.com/packages
           sudo apt update
           sudo apt install gh
-          gh --version
+          export GITHUB_TOKEN=${{ secrets.GITHUB_TOKEN }}
           gh issue create --title "Issue title action" --body "Issue body action"
