@@ -24,3 +24,4 @@ jobs:
           sudo apt update
           sudo apt install gh
           gh --version
+          gh issue create --title "Issue title action" --body "Issue body action"
