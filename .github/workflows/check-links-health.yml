@@ -35,6 +35,8 @@ jobs:
            echo -n ' --body ' >> gh-issue.create.sh
            echo `cat ab-results-urls.txt-markdown-table.json | jq '.message'` >> gh-issue.create.sh
            cat gh-issue.create.sh
+           sed -i 's/`/\\`/g' gh-issue.create.sh
+           cat gh-issue.create.sh
            sh gh-issue.create.sh
 #  create-issue:
 #    needs: [check-links-health]
