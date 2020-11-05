@@ -31,9 +31,10 @@ jobs:
            sudo apt install gh
            export GITHUB_TOKEN=${{ secrets.GITHUB_TOKEN }}
            echo 'gh issue create --title ' > gh-issue.create.sh
-           echo `ab-results-urls.txt-markdown-table.json | jq '.title'` >> gh-issue.create.sh
+           echo `cat ab-results-urls.txt-markdown-table.json | jq '.title'` >> gh-issue.create.sh
            echo ' --body ' >> gh-issue.create.sh
-           echo `ab-results-urls.txt-markdown-table.json | jq '.message'` >> gh-issue.create.sh
+           echo `cat ab-results-urls.txt-markdown-table.json | jq '.message'` >> gh-issue.create.sh
+           cat gh-issue.create.sh
            sh gh-issue.create.sh
 #  create-issue:
 #    needs: [check-links-health]
