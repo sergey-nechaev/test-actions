@@ -11,7 +11,6 @@ on:
 jobs:
   check-links-health:
     runs-on: ubuntu-18.04
-
     steps:
     - uses: actions/checkout@v2
     - name: Set up Ruby 2.6
@@ -23,6 +22,15 @@ jobs:
            gem install awesome_bot
            awesome_bot urls.txt --allow-ssl
            ls -al
+    - name: awesome_bot fails
+      if: ${{ failure() }}     
+      run: |
+           echo "failed huh"
+#  create-issue:
+#    needs: [check-links-health]
+#    runs-on: ubuntu-18.04    
+#    if: ${{ success() }}
+    
 #    - name: Create issue
 #      run: |
 #          sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-key C99B11DEB97541F0
