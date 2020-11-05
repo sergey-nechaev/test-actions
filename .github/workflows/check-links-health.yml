@@ -25,9 +25,9 @@ jobs:
     - name: awesome_bot fails
       if: ${{ failure() }}     
       run: |
-           cat ab-results-urls.txt-filtered.json
-           cat ab-results-urls.txt-markdown-table.json
-           cat ab-results-urls.txt.json
+           cat ab-results-urls.txt-markdown-table.json | jq '.title'        
+           echo '--------------------------------------------------'
+           cat ab-results-urls.txt-markdown-table.json | jq '.message'
 #  create-issue:
 #    needs: [check-links-health]
 #    runs-on: ubuntu-18.04    
