@@ -1,6 +1,4 @@
 name: Check Links Health
-author: Sergey Nechaev
-description: Huh
 
 on:
   workflow_dispatch:
