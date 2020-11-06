@@ -1,15 +1,14 @@
-# This is a basic workflow to help you get started with Actions
-
 name: Check Links Health
+author: Sergey Nechaev
+description: Huh
 
 on:
   workflow_dispatch:
   schedule:
-    # * is a special character in YAML so you have to quote this string
-    - cron:  '1 1 * * 0'
+    - cron:  '1 1 * * 0' # * is a special character in YAML so you have to quote this string
 
 jobs:
-  check-links-health:
+  check-links-health:    
     runs-on: ubuntu-18.04
     steps:
     - uses: actions/checkout@v2
@@ -17,38 +16,25 @@ jobs:
       uses: actions/setup-ruby@v1
       with:
         ruby-version: 2.6.x
-    - name: awesome_bot checks
+    - name: Run awesome_bot
       run: |
            gem install awesome_bot
            awesome_bot urls.txt --allow-ssl
            ls -al
-    - name: awesome_bot fails
-      if: ${{ failure() }}     
+    - name: Create issue on awesome_bot fail
+      if: ${{ failure() }}   
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}        
       run: |
            sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-key C99B11DEB97541F0
            sudo apt-add-repository https://cli.github.com/packages
            sudo apt update
            sudo apt install gh
-           export GITHUB_TOKEN=${{ secrets.GITHUB_TOKEN }}
            echo -n 'gh issue create --title ' > gh-issue.create.sh
            echo -n `cat ab-results-urls.txt-markdown-table.json | jq '.title'` >> gh-issue.create.sh
            echo -n ' --body ' >> gh-issue.create.sh
            echo `cat ab-results-urls.txt-markdown-table.json | jq '.message'` >> gh-issue.create.sh
-           cat gh-issue.create.sh
            sed -i 's/`/\\`/g' gh-issue.create.sh
            sed -i 's/\\n/\n/g' gh-issue.create.sh
            cat gh-issue.create.sh
            sh gh-issue.create.sh
-#  create-issue:
-#    needs: [check-links-health]
-#    runs-on: ubuntu-18.04    
-#    if: ${{ success() }}
-    
-#    - name: Create issue
-#      run: |
-#          sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-key C99B11DEB97541F0
-#          sudo apt-add-repository https://cli.github.com/packages
-#          sudo apt update
-#          sudo apt install gh
-#          export GITHUB_TOKEN=${{ secrets.GITHUB_TOKEN }}
-#          gh issue create --title "Issue title action" --body "Issue body action"
